@@ -14,6 +14,7 @@ If I can't figure out the training aspect I should at least end up with a playab
 
 # deck object
    - A deck of cards
+   - array of suits, array of name, array of value. Combine as needed/best.
    
 # shoe object:
     - # of decks
