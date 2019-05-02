@@ -63,12 +63,13 @@ If I can't figure out the training aspect I should at least end up with a playab
     - Creating and checking array for optimal play, specifically since there are 3 different arrays (normal, one for soft hands, and one for pairs)
     - Do i need to track suits?
 
-# Reach goals/'would be nice' ideas:
+# Reach goals/'would be nice' ideas/Icebox
     - User can set number of decks and specific rules that a casino may offer. 
         - Give user expected value of the settings
     - Display mistakes in terms of expected value.
     - Keep track of correct/incorrect actions over a session, track expected value in percentage and bets/per
     - Professional/subdued response vs. "Fun" responses to correct/incorrect
+    - Sounds
 
 
 
