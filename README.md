@@ -12,6 +12,9 @@ If I can't figure out the training aspect I should at least end up with a playab
     - Array = Dealer playing rules
     - Counter helper variables for counting cards
 
+# deck object
+   - A deck of cards
+   
 # shoe object:
     - # of decks
     - Deck penatration setting/current
@@ -65,6 +68,7 @@ If I can't figure out the training aspect I should at least end up with a playab
         - Give user expected value of the settings
     - Display mistakes in terms of expected value.
     - Keep track of correct/incorrect actions over a session, track expected value in percentage and bets/per
+    - Professional/subdued response vs. "Fun" responses to correct/incorrect
 
 
 
