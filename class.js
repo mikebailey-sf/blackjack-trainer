@@ -1,13 +1,69 @@
+class Hand {
+	constructor(cards){
+		this.cards = cards;
+		let t = 0;
+		cards.forEach(function(card){
+			t+=card[0];
+		});
+		this.total = t;
+	}
+	calcTotal(){
+		let t = 0;
+		this.cards.forEach(function(card){
+			t+=card[0];
+		});
+		this.total = t;
+	}
+}
 
 
 
-/**
+basicHard = {
+		'd2': {'5': 'h', '6': 'h', '7': 'h', '8': 'h', '9': 'h', '10': 'd', '11': 'd', '12': 'h', '13': 's', '14': 's', '15': 's', '16': 's', '17': 's', '18': 's', '19': 's', '20': 's', '21': 's'},
+/*
+		'3': 
+		'4': 
+		'5': 
+		'6': 
+		'7': 
+		'8': 
+		'9':
+		'10':
+		'A':   
+	},
+	soft = {
+		'2': 
+		'3': 
+		'4': 
+		'5': 
+		'6': 
+		'7': 
+		'8': 
+		'9':
+		'10':
+		'A':   
+	},
+	pair = {
+		'2':
+		'3': 
+		'4': 
+		'5': 
+		'6': 
+		'7': 
+		'8': 
+		'9':
+		'10':
+		'A':   
+*/
+	};
+
+
+
+/*
  * 
  * https://gomakethings.com/how-to-shuffle-an-array-with-vanilla-js/
  * Randomly shuffle an array
  * https://stackoverflow.com/a/2450976/1293256
- * @param  {Array} array The array to shuffle
- * @return {String}      The first item in the shuffled array
  */
 function shuffle (array) {
 
