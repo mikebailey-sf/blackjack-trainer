@@ -3,13 +3,6 @@ const cardSuit = ['c','d','h','s'];
 const cardRank = ['a', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'j', 'q', 'k'];
 const cardValue = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10];
 
-const dealerRules = {
-
-};
-
-const optimalPlay = {
-
-};
 
 /*----- app's state (variables) -----*/
 var shoe = [];
@@ -20,15 +13,10 @@ var playerAction = "";
 
 /*----- cached element references -----*/ 
 var dealer = document.getElementById('dealer');
-var player = document.getElementsByClassName('player');
+var player = document.getElementById('player'); 
 
 /*----- event listeners -----*/ 
-//let click = document.getElementById('#controls').addEventListener('click', onClick);
-document.getElementById('hit').addEventListener('click', onHit);
-document.getElementById('stand').addEventListener('click', onStand);
-document.getElementById('double').addEventListener('click', onDouble);
-document.getElementById('split').addEventListener('click', onSplit);
-
+document.getElementById('player').addEventListener('click', onClick);
 
 /*----- functions -----*/
 function init() {
@@ -37,43 +25,54 @@ function init() {
 }
 
 function deal() {
-    $('.card').remove('div.card');
+    $('.hand').remove('div.card');
     dealerHand = new Hand();
     playerHand = new Hand();
-
-    let dealt = shoe.pop();
-    $(dealer).append(`<div class='card'>${dealt}</div>`);
-    dealerHand.cards.push(dealt);
-
-    dealt = shoe.pop();
-    $(player).prepend(`<div class='card'>${dealt}</div>`);
-    playerHand.cards.push(dealt);
-
-    dealt = shoe.pop();
-    $(player).prepend(`<div class='card'>${dealt}</div>`);
-    playerHand.cards.push(dealt);
-
+    dealerHand.cards.push(shoe.pop());
+    playerHand.cards.push(shoe.pop());
+    playerHand.cards.push(shoe.pop());
     dealerHand.calcTotal();
     playerHand.calcTotal();
-
+    render("start");
 }
 
-function render() {
+function render(state) {
+    if(state==="start"){
+        $(dealer).append(`<div class='card'>${dealerHand.cards[0]}</div>`);
+        $(player).append(playerTemplate);
+        $(player).prepend(`<div class='card'>${playerHand.cards[0]}</div>`);
+        $(player).prepend(`<div class='card'>${playerHand.cards[0]}</div>`);
+    }
+
+    if (state==="split"){
+
+    }
 
 }
 
 function onClick(evt) {
-
+    switch(evt.target.name) {
+        case "hit": 
+            onHit();
+        break;
+        case "stand": 
+            onStand();
+        break;
+        case "double": 
+        break;
+        case "split": 
+        break;                
+    }
 }
 
 function onHit() {
     playerAction = "hit";
-   feedback(playerAction);
+    feedback(playerAction);
     let dealt = shoe.pop();
     $(player).prepend(`<div class='card'>${dealt}</div>`);
     playerHand.cards.push(dealt);
     playerHand.calcTotal();
-    if (playerHand.total > 21){deal();}
+    //if (playerHand.total > 21){deal();}
 }
 
 function onStand() {
@@ -91,7 +90,9 @@ function onDouble() {
 
 function onSplit() {
     playerAction = "split";
+    if (playerHand.cards[0][0] === playerHand.cards[1][0]){
 
+    }
 }
 
 function dealerTurn() {

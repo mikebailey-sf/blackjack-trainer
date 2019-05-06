@@ -55,6 +55,16 @@ basicStrategy = {
 	}
 };
 
+var playerTemplate = `
+<div class="hand">
+	<div id="controls">
+		<button name='hit'>Hit</button>
+		<button name='stand'>Stand</button>
+		<button name='double'>Double</button>
+		<button name='split'>Split</button>
+	</div>
+</div>`;
+
 
 /*
  * 
