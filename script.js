@@ -37,15 +37,21 @@ function deal() {
 }
 
 function render(state) {
+
     if(state==="start"){
-        $(dealer).append(`<div class='card'>${dealerHand.cards[0]}</div>`);
+        //$(dealer).append(`<div class='card'>${dealerHand.cards[0]}</div>`);
+        $(dealer).append(`<img class="card" src="img/${dealerHand.cards[0][2]}${dealerHand.cards[0][1]}.png">`);
         $(player).append(playerTemplate);
-        $(player).prepend(`<div class='card'>${playerHand.cards[0]}</div>`);
-        $(player).prepend(`<div class='card'>${playerHand.cards[0]}</div>`);
+        $(player).prepend(`<img class="card" src="img/${playerHand.cards[0][2]}${dealerHand.cards[0][1]}.png">`);
+        $(player).prepend(`<img class="card" src="img/${playerHand.cards[1][2]}${dealerHand.cards[0][1]}.png">`);
     }
 
     if (state==="split"){
 
+    }
+
+    if (state==="hit") {
+        
     }
 
 }
@@ -68,9 +74,11 @@ function onClick(evt) {
 function onHit() {
     playerAction = "hit";
     feedback(playerAction);
-    let dealt = shoe.pop();
-    $(player).prepend(`<div class='card'>${dealt}</div>`);
-    playerHand.cards.push(dealt);
+    //let dealt = shoe.pop();
+    playerHand.cards.push(shoe.pop());
+
+    //$(player).prepend(`<div class='card'>${dealt}</div>`);
+    
     playerHand.calcTotal();
     //if (playerHand.total > 21){deal();}
 }

@@ -42,10 +42,12 @@ img {
     text-align: center;
 }
 
-div.card {
+.card {
     width: 150px;
     height: 240px;
     margin: 5px;
-    background-color: royalblue;
+    background-color: blanchedalmond;
     display: inline-block;
+    border: 4px solid blue;
+    border-radius: 10px;
 }
