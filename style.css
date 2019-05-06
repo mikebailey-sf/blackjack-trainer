@@ -19,6 +19,10 @@ main {
     background-color: blanchedalmond;
 }   
 
+button {
+    color: black;
+}
+
 img {
     width: 150px;
 }

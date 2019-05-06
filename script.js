@@ -15,6 +15,7 @@ const optimalPlay = {
 var shoe = [];
 var dh = [];
 var ph = [];
+var playerAction = "";
 
 
 /*----- cached element references -----*/ 
@@ -36,25 +37,24 @@ function init() {
 }
 
 function deal() {
+    $('.card').remove('div.card');
+    dealerHand = new Hand();
+    playerHand = new Hand();
+
     let dealt = shoe.pop();
     $(dealer).append(`<div class='card'>${dealt}</div>`);
-    dh.push(dealt);
-    
-    dealt = shoe.pop();
-    $(dealer).append(`<div class='card'>${dealt}</div>`);
-    dh.push(dealt);
+    dealerHand.cards.push(dealt);
 
     dealt = shoe.pop();
     $(player).prepend(`<div class='card'>${dealt}</div>`);
-    ph.push(dealt);
+    playerHand.cards.push(dealt);
 
     dealt = shoe.pop();
     $(player).prepend(`<div class='card'>${dealt}</div>`);
-    ph.push(dealt);
+    playerHand.cards.push(dealt);
 
-    dealerHand = new Hand(dh);
-    playerHand = new Hand(ph);
-    console.log(ph);
+    dealerHand.calcTotal();
+    playerHand.calcTotal();
 
 }
 
@@ -67,28 +67,48 @@ function onClick(evt) {
 }
 
 function onHit() {
+    playerAction = "hit";
+   feedback(playerAction);
     let dealt = shoe.pop();
     $(player).prepend(`<div class='card'>${dealt}</div>`);
     playerHand.cards.push(dealt);
     playerHand.calcTotal();
-    //$('#feedback').html(playerHand.total);
-    console.log(playerHand.total)
+    if (playerHand.total > 21){deal();}
 }
 
 function onStand() {
-    dealerTurn();
+    playerAction = "stand";
+    feedback(playerAction);
+    deal();
+
 }
 
 function onDouble() {
-    onHit();
+    playerAction = "double";
+    feedback(playerAction);   
+    deal();
 }
 
 function onSplit() {
+    playerAction = "split";
 
 }
 
 function dealerTurn() {
-    
+
+}
+
+function feedback(action){
+    if (action === basicStrategy.hard[dealerHand.total][playerHand.total])
+    {
+        $('#feedback').html(
+            "Right!"
+        );
+    } else {
+        $('#feedback').html(
+            "Wrong!"
+        );
+    }
 }
 
 function makeDeck (suits, values, ranks) {
