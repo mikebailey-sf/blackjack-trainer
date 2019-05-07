@@ -1,9 +1,9 @@
 class Hand {
-	constructor(){
+	constructor() {
 		this.cards = [];
 		this.total = 0;
 	}
-	calcTotal(){
+	calcTotal() {
 		let t = 0;
 		this.cards.forEach(function(card){
 			t+=card[0];
@@ -11,6 +11,21 @@ class Hand {
 		this.total = t;
 	}
 	//Include hit/split/double methods here?
+	hit(split = false) {
+		playerAction = "hit";
+		feedback(playerAction);
+		this.cards.push(shoe.pop());
+		this.calcTotal();
+		if (split){
+			render("splithit");
+		} else {
+			render("hit");
+		}
+	}
+	stand(split = false){
+		playerAction = "stand";
+		feedback(playerAction);
+	}
 }
 
 basicStrategy = {

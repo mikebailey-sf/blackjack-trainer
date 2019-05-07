@@ -3,14 +3,15 @@ const cardSuit = ['c','d','h','s'];
 const cardRank = ['a', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'j', 'q', 'k'];
 const cardValue = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10];
 
-
 /*----- app's state (variables) -----*/
 var shoe = [];
 var dh = [];
 var ph = [];
 var playerAction = "";
-var hitCount = 0;
-
+var runningCount = 0;
+var actionCount = 0;
+var correctCount = 0;
+var incorrectCount = 0;
 
 /*----- cached element references -----*/ 
 var dealer = document.getElementById('dealer');
@@ -18,6 +19,7 @@ var player = document.getElementById('player');
 
 /*----- event listeners -----*/ 
 document.getElementById('player').addEventListener('click', onClick);
+document.getElementById('new-hand').addEventListener('click', nextHand);
 
 /*----- functions -----*/
 function init() {
@@ -39,44 +41,27 @@ function deal() {
     render("start");
 }
 
-function onHit() {
-    playerAction = "hit";
-    hitCount+=1;
-    feedback(playerAction);
-    playerHand.cards.push(shoe.pop());
-    playerHand.calcTotal();
-    render("hit");
-    if (playerHand.total >= 21) {
-        nextHand();
-    }
-}
 
-function onStand() {
-    playerAction = "stand";
-    feedback(playerAction);
-    nextHand();
-}
 
 function onDouble() {
     playerAction = "double";
     feedback(playerAction);   
-    nextHand();
+    //nextHand();
 }
 
 function onSplit() {
     playerAction = "split";
+    hitcount2 = 1;
     if (playerHand.cards[0][0] === playerHand.cards[1][0]){
         playerHand2 = new Hand();
         playerHand2.cards.push(playerHand.cards.pop());
         playerHand.cards.push(shoe.pop());
         playerHand2.cards.push(shoe.pop());
-
         render("split");
     }
 }
 
 function nextHand() {
-    //alert ('You won or lost!');
     $('#dealer').html('');
     $('#player').html('');
     deal();
@@ -86,17 +71,8 @@ function dealerTurn() {
 
 }
 
-function feedback(action){
-    if (action === basicStrategy.hard[dealerHand.total][playerHand.total])
-    {
-        $('#feedback').html(
-            "Right!"
-        );
-    } else {
-        $('#feedback').html(
-            "Wrong!"
-        );
-    }
+function feedback(action, hand){
+    
 }
 
 function makeDeck (suits, values, ranks) {
@@ -114,13 +90,20 @@ function makeDeck (suits, values, ranks) {
 }
 
 function onClick(evt) {
+    actionCount++;
     switch(evt.target.name) {
         case "hit": 
-            onHit();
+            playerHand.hit(false);
+        break;
+        case "hit2": 
+            playerHand2.hit(true);
         break;
         case "stand": 
-            onStand();
+            playerHand.stand();
         break;
+        case "stand2": 
+            playerHand2.stand(true);
+        break;        
         case "double":
             onDouble(); 
         break;
@@ -157,7 +140,6 @@ function render(state) {
                 <button name='hit2'>Hit</button>
                 <button name='stand2'>Stand</button>
                 <button name='double2'>Double</button>
-                <button name='split2'>Split</button>
             </div>
         </div>`;        
         $(player).html("");
@@ -166,8 +148,27 @@ function render(state) {
     }
 
     if (state==="hit") {
-        $(player).prepend(`<img class="card" src="img/${playerHand.cards[hitCount][2]}${playerHand.cards[hitCount][1]}.png">`);
+        debugger;
+        $("#player > div.hand:first-child").prepend(`<img class="card" src="img/${playerHand.cards[playerHand.cards.length-1][2]}${playerHand.cards[playerHand.cards.length-1][1]}.png">`);
+    }
+
+    if (state==="splithit") {
+        $("#player > div.hand:nth-child(2)").prepend(`<img class="card" src="img/${playerHand2.cards[playerHand2.cards.length-1][2]}${playerHand2.cards[playerHand2.cards.length-1][1]}.png">`);
     }
 }
 
 init(); 
+
+
+
+/*function onHit() {
+    playerAction = "hit";
+    hitCount+=1;
+    feedback(playerAction);
+    playerHand.cards.push(shoe.pop());
+    playerHand.calcTotal();
+    render("hit");
+    if (playerHand.total >= 21) {
+        nextHand();
+    }
+}*/
