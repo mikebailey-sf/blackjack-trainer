@@ -10,9 +10,8 @@ class Hand {
 		});
 		this.total = t;
 	}
+	//Include hit/split/double methods here?
 }
-
-
 
 basicStrategy = {
 	hard: {
@@ -54,16 +53,6 @@ basicStrategy = {
 		11: {2: 'split', 3: 'split', 4: 'split', 5: 'split', 6: 'split', 7: 'split', 8: 'split', 9: 'split', 10: 'split', 11: 'split'},
 	}
 };
-
-var playerTemplate = `
-<div class="hand">
-	<div id="controls">
-		<button name='hit'>Hit</button>
-		<button name='stand'>Stand</button>
-		<button name='double'>Double</button>
-		<button name='split'>Split</button>
-	</div>
-</div>`;
 
 
 /*

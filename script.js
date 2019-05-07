@@ -9,6 +9,7 @@ var shoe = [];
 var dh = [];
 var ph = [];
 var playerAction = "";
+var hitCount = 0;
 
 
 /*----- cached element references -----*/ 
@@ -25,7 +26,8 @@ function init() {
 }
 
 function deal() {
-    $('.hand').remove('div.card');
+    //dealer.remove('div.hand');
+    // /player.remove('div.hand');
     dealerHand = new Hand();
     playerHand = new Hand();
     dealerHand.cards.push(shoe.pop());
@@ -33,74 +35,51 @@ function deal() {
     playerHand.cards.push(shoe.pop());
     dealerHand.calcTotal();
     playerHand.calcTotal();
+    hitCount = 1;
     render("start");
-}
-
-function render(state) {
-
-    if(state==="start"){
-        //$(dealer).append(`<div class='card'>${dealerHand.cards[0]}</div>`);
-        $(dealer).append(`<img class="card" src="img/${dealerHand.cards[0][2]}${dealerHand.cards[0][1]}.png">`);
-        $(player).append(playerTemplate);
-        $(player).prepend(`<img class="card" src="img/${playerHand.cards[0][2]}${dealerHand.cards[0][1]}.png">`);
-        $(player).prepend(`<img class="card" src="img/${playerHand.cards[1][2]}${dealerHand.cards[0][1]}.png">`);
-    }
-
-    if (state==="split"){
-
-    }
-
-    if (state==="hit") {
-        
-    }
-
-}
-
-function onClick(evt) {
-    switch(evt.target.name) {
-        case "hit": 
-            onHit();
-        break;
-        case "stand": 
-            onStand();
-        break;
-        case "double": 
-        break;
-        case "split": 
-        break;                
-    }
 }
 
 function onHit() {
     playerAction = "hit";
+    hitCount+=1;
     feedback(playerAction);
-    //let dealt = shoe.pop();
     playerHand.cards.push(shoe.pop());
-
-    //$(player).prepend(`<div class='card'>${dealt}</div>`);
-    
     playerHand.calcTotal();
-    //if (playerHand.total > 21){deal();}
+    render("hit");
+    if (playerHand.total >= 21) {
+        nextHand();
+    }
 }
 
 function onStand() {
     playerAction = "stand";
     feedback(playerAction);
-    deal();
-
+    nextHand();
 }
 
 function onDouble() {
     playerAction = "double";
     feedback(playerAction);   
-    deal();
+    nextHand();
 }
 
 function onSplit() {
     playerAction = "split";
     if (playerHand.cards[0][0] === playerHand.cards[1][0]){
+        playerHand2 = new Hand();
+        playerHand2.cards.push(playerHand.cards.pop());
+        playerHand.cards.push(shoe.pop());
+        playerHand2.cards.push(shoe.pop());
 
+        render("split");
     }
+}
+
+function nextHand() {
+    //alert ('You won or lost!');
+    $('#dealer').html('');
+    $('#player').html('');
+    deal();
 }
 
 function dealerTurn() {
@@ -134,6 +113,61 @@ function makeDeck (suits, values, ranks) {
     return deck;
 }
 
+function onClick(evt) {
+    switch(evt.target.name) {
+        case "hit": 
+            onHit();
+        break;
+        case "stand": 
+            onStand();
+        break;
+        case "double":
+            onDouble(); 
+        break;
+        case "split": 
+            onSplit();
+        break;                
+    }
+}
 
+function render(state) {
+    var playerTemplate = `
+    <div class="hand">
+        <img class="card" src="img/${playerHand.cards[0][2]}${playerHand.cards[0][1]}.png">
+        <img class="card" src="img/${playerHand.cards[1][2]}${playerHand.cards[1][1]}.png">
+        <div id="controls">
+            <button name='hit'>Hit</button>
+            <button name='stand'>Stand</button>
+            <button name='double'>Double</button>
+            <button name='split'>Split</button>
+        </div>
+    </div>`;
+
+    if(state==="start"){
+        $(dealer).append(`<div class="hand"><img class="card" src="img/${dealerHand.cards[0][2]}${dealerHand.cards[0][1]}.png"></div>`);
+        $(player).append(playerTemplate);
+    }
+
+    if (state==="split"){
+        var splitTemplate = `
+        <div class="hand">
+            <img class="card" src="img/${playerHand2.cards[0][2]}${playerHand2.cards[0][1]}.png">
+            <img class="card" src="img/${playerHand2.cards[1][2]}${playerHand2.cards[1][1]}.png">
+            <div id="controls">
+                <button name='hit2'>Hit</button>
+                <button name='stand2'>Stand</button>
+                <button name='double2'>Double</button>
+                <button name='split2'>Split</button>
+            </div>
+        </div>`;        
+        $(player).html("");
+        $(player).append(playerTemplate);
+        $(player).append(splitTemplate);
+    }
+
+    if (state==="hit") {
+        $(player).prepend(`<img class="card" src="img/${playerHand.cards[hitCount][2]}${playerHand.cards[hitCount][1]}.png">`);
+    }
+}
 
 init(); 
