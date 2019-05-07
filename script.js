@@ -12,6 +12,7 @@ var runningCount = 0;
 var actionCount = 0;
 var correctCount = 0;
 var incorrectCount = 0;
+var correctPlay = "";
 
 /*----- cached element references -----*/ 
 var dealer = document.getElementById('dealer');
@@ -28,30 +29,24 @@ function init() {
 }
 
 function deal() {
-    //dealer.remove('div.hand');
-    // /player.remove('div.hand');
+    
     dealerHand = new Hand();
     playerHand = new Hand();
     dealerHand.cards.push(shoe.pop());
     playerHand.cards.push(shoe.pop());
     playerHand.cards.push(shoe.pop());
-    dealerHand.calcTotal();
+    dealerHand.total = dealerHand.cards[0][0];
     playerHand.calcTotal();
-    hitCount = 1;
     render("start");
 }
-
-
 
 function onDouble() {
     playerAction = "double";
     feedback(playerAction);   
-    //nextHand();
 }
 
 function onSplit() {
     playerAction = "split";
-    hitcount2 = 1;
     if (playerHand.cards[0][0] === playerHand.cards[1][0]){
         playerHand2 = new Hand();
         playerHand2.cards.push(playerHand.cards.pop());
@@ -69,10 +64,6 @@ function nextHand() {
 
 function dealerTurn() {
 
-}
-
-function feedback(action, hand){
-    
 }
 
 function makeDeck (suits, values, ranks) {
@@ -109,6 +100,8 @@ function onClick(evt) {
         break;
         case "split": 
             onSplit();
+            playerHand.feedback("split");
+
         break;                
     }
 }
@@ -148,7 +141,6 @@ function render(state) {
     }
 
     if (state==="hit") {
-        debugger;
         $("#player > div.hand:first-child").prepend(`<img class="card" src="img/${playerHand.cards[playerHand.cards.length-1][2]}${playerHand.cards[playerHand.cards.length-1][1]}.png">`);
     }
 
@@ -158,17 +150,3 @@ function render(state) {
 }
 
 init(); 
-
-
-
-/*function onHit() {
-    playerAction = "hit";
-    hitCount+=1;
-    feedback(playerAction);
-    playerHand.cards.push(shoe.pop());
-    playerHand.calcTotal();
-    render("hit");
-    if (playerHand.total >= 21) {
-        nextHand();
-    }
-}*/

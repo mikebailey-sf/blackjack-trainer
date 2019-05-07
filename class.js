@@ -2,18 +2,29 @@ class Hand {
 	constructor() {
 		this.cards = [];
 		this.total = 0;
+		this.over = false;
+		this.soft = false;
+		this.pair = false;
 	}
+
 	calcTotal() {
 		let t = 0;
+		let _soft = this.soft;
+		if (this.cards[0][0] === this.cards[1][0]){
+			this.pair = true;
+		}
 		this.cards.forEach(function(card){
+			if (card[0] == 11) {
+				_soft = true;
+			}
 			t+=card[0];
 		});
 		this.total = t;
+		this.soft = _soft;
 	}
-	//Include hit/split/double methods here?
+
 	hit(split = false) {
-		playerAction = "hit";
-		feedback(playerAction);
+		this.feedback("hit");
 		this.cards.push(shoe.pop());
 		this.calcTotal();
 		if (split){
@@ -22,9 +33,38 @@ class Hand {
 			render("hit");
 		}
 	}
+
 	stand(split = false){
-		playerAction = "stand";
-		feedback(playerAction);
+		this.feedback("stand");
+		this.over = true;
+		nextHand();
+	}
+
+	feedback(action) {
+		if (this.pair) {
+			if (basicStrategy.pair[dealerHand.total][this.total] == action){
+				$("#feedback").html('Correct!');
+			} else {
+				$("#feedback").html('Wrong!');
+			}
+			return;
+		}
+		if (this.soft) {
+			if (basicStrategy.soft[dealerHand.total][this.total] == action){
+				$("#feedback").html('Correct!');
+			} else {
+				$("#feedback").html('Wrong!');
+			}
+			return;
+		}
+
+		if (basicStrategy.hard[dealerHand.total][this.total] == action){
+			$("#feedback").html('Correct!');
+		} else {
+			$("#feedback").html('Wrong!');
+		}	
+		
+
 	}
 }
 
@@ -40,7 +80,6 @@ basicStrategy = {
 		9: {5: 'hit', 6: 'hit', 7: 'hit', 8: 'hit', 9: 'hit', 10: 'double', 11: 'double', 12: 'hit', 13: 'hit', 14: 'hit', 15: 'hit', 16: 'hit', 17: 'stand', 18: 'stand', 19: 'stand', 20: 'stand', 21: 'stand'},
 		10: {5: 'hit', 6: 'hit', 7: 'hit', 8: 'hit', 9: 'hit', 10: 'hit', 11: 'double', 12: 'hit', 13: 'hit', 14: 'hit', 15: 'hit', 16: 'hit', 17: 'stand', 18: 'stand', 19: 'stand', 20: 'stand', 21: 'stand'},
 		11: {5: 'hit', 6: 'hit', 7: 'hit', 8: 'hit', 9: 'hit', 10: 'hit', 11: 'double', 12: 'hit', 13: 'hit', 14: 'hit', 15: 'hit', 16: 'hit', 17: 'stand', 18: 'stand', 19: 'stand', 20: 'stand', 21: 'stand'},
-
 	},
 	soft: {
 		2: {13: 'hit', 14: 'hit', 15: 'hit', 16: 'hit', 17: 'hit', 18: 'double', 19: 'stand', 20: 'stand', 21: 'stand'},
@@ -69,7 +108,6 @@ basicStrategy = {
 	}
 };
 
-
 /*
  * 
  * https://gomakethings.com/how-to-shuffle-an-array-with-vanilla-js/
@@ -77,7 +115,6 @@ basicStrategy = {
  * https://stackoverflow.com/a/2450976/1293256
  */
 function shuffle (array) {
-
 	var currentIndex = array.length;
 	var temporaryValue, randomIndex;
 
@@ -92,12 +129,5 @@ function shuffle (array) {
 		array[currentIndex] = array[randomIndex];
 		array[randomIndex] = temporaryValue;
 	}
-
 	return array;
-
 };
-
-
-
-
-
