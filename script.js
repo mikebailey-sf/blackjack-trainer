@@ -13,6 +13,7 @@ var actionCount = 0;
 var correctCount = 0;
 var incorrectCount = 0;
 var correctPlay = "";
+var correct;
 
 /*----- cached element references -----*/ 
 var dealer = document.getElementById('dealer');
@@ -28,8 +29,7 @@ function init() {
     deal();
 }
 
-function deal() {
-    
+function deal() {   
     dealerHand = new Hand();
     playerHand = new Hand();
     dealerHand.cards.push(shoe.pop());
@@ -38,11 +38,6 @@ function deal() {
     dealerHand.total = dealerHand.cards[0][0];
     playerHand.calcTotal();
     render("start");
-}
-
-function onDouble() {
-    playerAction = "double";
-    feedback(playerAction);   
 }
 
 function onSplit() {
@@ -57,13 +52,12 @@ function onSplit() {
 }
 
 function nextHand() {
+    if (!correct){
+
+    }
     $('#dealer').html('');
     $('#player').html('');
     deal();
-}
-
-function dealerTurn() {
-
 }
 
 function makeDeck (suits, values, ranks) {
@@ -96,12 +90,11 @@ function onClick(evt) {
             playerHand2.stand(true);
         break;        
         case "double":
-            onDouble(); 
+            playerHand.double(); 
         break;
         case "split": 
             onSplit();
             playerHand.feedback("split");
-
         break;                
     }
 }
@@ -146,6 +139,18 @@ function render(state) {
 
     if (state==="splithit") {
         $("#player > div.hand:nth-child(2)").prepend(`<img class="card" src="img/${playerHand2.cards[playerHand2.cards.length-1][2]}${playerHand2.cards[playerHand2.cards.length-1][1]}.png">`);
+    }
+
+    if (state === "feedback"){
+        $("#percentage").html(`
+            You've got ${correctCount} out of ${actionCount} correct!<br>
+            <span>% ${Math.floor(correctCount/actionCount * 100)}</span>
+        `);
+        if (correct) {
+            $("#feedback").html("RIGHT!");
+        } else {
+            $("#feedback").html(`WRONG! The correct play was to ${correctPlay}`);
+        }
     }
 }
 

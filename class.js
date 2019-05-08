@@ -11,7 +11,7 @@ class Hand {
 		let t = 0;
 		let _soft = this.soft;
 		if (this.cards[0][0] === this.cards[1][0]){
-			this.pair = true;
+			this.pair = true;	 
 		}
 		this.cards.forEach(function(card){
 			if (card[0] == 11) {
@@ -32,6 +32,13 @@ class Hand {
 		} else {
 			render("hit");
 		}
+		if (this.total>=21 && this.soft == false){
+			nextHand();
+		}
+		if (this.total>=21 && this.soft == true) {
+			this.total-=10;
+			this.soft = false;
+		}
 	}
 
 	stand(split = false){
@@ -40,34 +47,51 @@ class Hand {
 		nextHand();
 	}
 
+	double(split = false){
+		this.feedback("double");
+		this.cards.push(shoe.pop());
+		nextHand();		
+	}
+
 	feedback(action) {
 		if (this.pair) {
-			if (basicStrategy.pair[dealerHand.total][this.total] == action){
-				$("#feedback").html('Correct!');
+			if (basicStrategy.pair[dealerHand.total][this.total/2] == action){
+				correctCount++;
+				correct = true;
 			} else {
-				$("#feedback").html('Wrong!');
+				incorrectCount++;
+				correct = false;
+				correctPlay = basicStrategy.pair[dealerHand.total][this.total/2];
 			}
+			render("feedback");
 			return;
 		}
 		if (this.soft) {
 			if (basicStrategy.soft[dealerHand.total][this.total] == action){
-				$("#feedback").html('Correct!');
+				correct = true;
+				correctCount++;
 			} else {
-				$("#feedback").html('Wrong!');
+				correct = false;
+				incorrectCount++;
+				correctPlay = basicStrategy.soft[dealerHand.total][this.total];
 			}
+			render("feedback");
 			return;
 		}
 
 		if (basicStrategy.hard[dealerHand.total][this.total] == action){
-			$("#feedback").html('Correct!');
+			correct = true;
+			correctCount++;
 		} else {
-			$("#feedback").html('Wrong!');
-		}	
-		
-
+			correct = false;
+			incorrectCount++;
+			correctPlay = basicStrategy.hard[dealerHand.total][this.total];
+		}
+		render("feedback");
 	}
 }
 
+//Strategy from wizardofodds https://wizardofodds.com/games/blackjack/strategy/calculator/
 basicStrategy = {
 	hard: {
 		2: {5: 'hit', 6: 'hit', 7: 'hit', 8: 'hit', 9: 'hit', 10: 'double', 11: 'double', 12: 'hit', 13: 'stand', 14: 'stand', 15: 'stand', 16: 'stand', 17: 'stand', 18: 'stand', 19: 'stand', 20: 'stand', 21: 'stand'},
@@ -114,6 +138,7 @@ basicStrategy = {
  * Randomly shuffle an array
  * https://stackoverflow.com/a/2450976/1293256
  */
+
 function shuffle (array) {
 	var currentIndex = array.length;
 	var temporaryValue, randomIndex;
