@@ -1,8 +1,62 @@
+* {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
 #controls button {
     margin: 10px;
     width: 20vmin;
+    background-color: indigo;
+}
+
+.hero {
+    background-color: indigo;
+    color: white;
+}
+
+.title {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 40px;
+}
+
+.title, .subtitle {
+    color: white;
+}
+
+#controls button:hover {
+    margin: 10px;
+    width: 20vmin;
+    background-color: rgb(149,85,192);
 }
 
 #new-hand {
     display:none;
+}
+
+main {
+    background-color: blanchedalmond;
+}
+
+.card {
+    border-radius: 10px;
+    margin: 5px;
+    padding: 5px;
+}
+
+#play-area {
+    text-align: center;
+}
+
+#right {
+    text-align: center;
+    background-color: #255e69;
+}
+
+#percentage, #feedback {
+    font-size: 22px;
+    color: white;
+    height: 30vmin;
+}
+
+span{
+    font-size: 90px;
 }
