@@ -28,6 +28,7 @@ class Hand {
 		this.cards.push(shoe.pop());
 		this.calcTotal();
 		render("hit");
+		debugger;
 		if (this.total>=21 && this.soft == false){
 			nextHand();
 		}

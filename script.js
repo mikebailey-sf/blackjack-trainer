@@ -49,9 +49,6 @@ function deal() {
 }
 
 function nextHand() {
-    if (!correct){
-
-    }
 
     deal();
 }
