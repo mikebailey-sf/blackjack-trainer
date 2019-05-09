@@ -9,25 +9,12 @@ body {
     background-image: url("img/background.jpg");
 }
 
-@font-face {
-    font-family: 'ShowBoat';
-    font-style: normal;
-    font-weight: normal;
-    src: local('font/ShowBoat'), url('font/shwboat.woff') format('woff');
-    }
-    
-    @font-face {
-    font-family: 'Showboat Regular';
-    font-style: normal;
-    font-weight: normal;
-    src: local('font/Showboat Regular'), url('font/SHOWBOA_.woff') format('woff');
-    }
-
 header {
     color: white;
     width: 60%;
     text-align: center;
-    font-family: "Showboat";
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: bold;
     font-size: 50px;
     padding: 20px;
 }

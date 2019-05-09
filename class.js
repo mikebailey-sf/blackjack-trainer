@@ -53,6 +53,11 @@ class Hand {
 		nextHand();		
 	}
 
+	split(){
+		this.feedback("split");
+		nextHand();
+	}
+
 	feedback(action) {
 		if (this.pair) {
 			if (basicStrategy.pair[dealerHand.total][this.total/2] == action){
@@ -118,17 +123,16 @@ basicStrategy = {
 		11: {13: 'hit', 14: 'hit', 15: 'hit', 16: 'hit', 17: 'hit', 18: 'hit', 19: 'stand', 20: 'stand', 21: 'stand'},
 	},
 	pair: {
-		2: {2: 'split', 3: 'split', 4: 'split', 5: 'split', 6: 'split', 7: 'split', 8: 'hit', 9: 'hit', 10: 'hit', 11: 'hit'},
-		3: {2: 'split', 3: 'split', 4: 'split', 5: 'split', 6: 'split', 7: 'split', 8: 'hit', 9: 'hit', 10: 'hit', 11: 'hit'},
-		4: {2: 'hit', 3: 'hit', 4: 'hit', 5: 'split', 6: 'split', 7: 'hit', 8: 'hit', 9: 'hit', 10: 'hit', 11: 'hit'},
-		5: {2: 'double', 3: 'double', 4: 'double', 5: 'double', 6: 'double', 7: 'double', 8: 'double', 9: 'double', 10: 'hit', 11: 'hit'},
-		6: {2: 'split', 3: 'split', 4: 'split', 5: 'split', 6: 'split', 7: 'split', 8: 'hit', 9: 'hit', 10: 'hit', 11: 'hit'},
-		7: {2: 'split', 3: 'split', 4: 'split', 5: 'split', 6: 'split', 7: 'split', 8: 'hit', 9: 'hit', 10: 'hit', 11: 'hit'},
-		8: {2: 'split', 3: 'split', 4: 'split', 5: 'split', 6: 'split', 7: 'split', 8: 'split', 9: 'split', 10: 'split', 11: 'split'},
-		8: {2: 'split', 3: 'split', 4: 'split', 5: 'split', 6: 'split', 7: 'split', 8: 'split', 9: 'split', 10: 'split', 11: 'split'},
-		9: {2: 'split', 3: 'split', 4: 'split', 5: 'split', 6: 'split', 7: 'stand', 8: 'split', 9: 'split', 10: 'stand', 11: 'stand'},
-		10: {2: 'stand', 3: 'stand', 4: 'stand', 5: 'stand', 6: 'stand', 7: 'stand', 8: 'stand', 9: 'stand', 10: 'stand', 11: 'stand'},
-		11: {2: 'split', 3: 'split', 4: 'split', 5: 'split', 6: 'split', 7: 'split', 8: 'split', 9: 'split', 10: 'split', 11: 'split'},
+		2: {2: 'split', 3: 'split', 4: 'hit', 5: 'double', 6: 'split', 7: 'split', 8: 'split', 9: 'split', 10: 'stand', 11: 'split'},
+		3: {2: 'split', 3: 'split', 4: 'hit', 5: 'double', 6: 'split', 7: 'split', 8: 'split', 9: 'split', 10: 'stand', 11: 'split'},
+		4: {2: 'split', 3: 'split', 4: 'hit', 5: 'double', 6: 'split', 7: 'split', 8: 'split', 9: 'split', 10: 'stand', 11: 'split'},
+		5: {2: 'split', 3: 'split', 4: 'split', 5: 'double', 6: 'split', 7: 'split', 8: 'split', 9: 'split', 10: 'stand', 11: 'split'},
+		6: {2: 'split', 3: 'split', 4: 'split', 5: 'double', 6: 'split', 7: 'split', 8: 'split', 9: 'split', 10: 'stand', 11: 'split'},
+		7: {2: 'split', 3: 'split', 4: 'hit', 5: 'double', 6: 'hit', 7: 'split', 8: 'split', 9: 'stand', 10: 'stand', 11: 'split'},
+		8: {2: 'hit', 3: 'hit', 4: 'hit', 5: 'double', 6: 'hit', 7: 'hit', 8: 'split', 9: 'split', 10: 'stand', 11: 'split'},
+		9: {2: 'hit', 3: 'hit', 4: 'hit', 5: 'double', 6: 'hit', 7: 'hit', 8: 'split', 9: 'split', 10: 'stand', 11: 'split'},
+		10: {2: 'hit', 3: 'hit', 4: 'hit', 5: 'hit', 6: 'hit', 7: 'hit', 8: 'split', 9: 'stand', 10: 'stand', 11: 'split'},
+		11: {2: 'hit', 3: 'hit', 4: 'hit', 5: 'hit', 6: 'hit', 7: 'hit', 8: 'split', 9: 'stand', 10: 'stand', 11: 'split'}
 	}
 };
 
