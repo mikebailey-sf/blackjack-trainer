@@ -23,18 +23,15 @@ class Hand {
 		this.soft = _soft;
 	}
 
-	hit(split = false) {
+	hit() {
 		this.feedback("hit");
 		this.cards.push(shoe.pop());
 		this.calcTotal();
-		if (split){
-			render("splithit");
-		} else {
-			render("hit");
-		}
+		render("hit");
 		if (this.total>=21 && this.soft == false){
 			nextHand();
 		}
+
 		if (this.total>=21 && this.soft == true) {
 			this.total-=10;
 			this.soft = false;
@@ -102,8 +99,8 @@ basicStrategy = {
 		2: {5: 'hit', 6: 'hit', 7: 'hit', 8: 'hit', 9: 'hit', 10: 'double', 11: 'double', 12: 'hit', 13: 'stand', 14: 'stand', 15: 'stand', 16: 'stand', 17: 'stand', 18: 'stand', 19: 'stand', 20: 'stand', 21: 'stand'},
 		3: {5: 'hit', 6: 'hit', 7: 'hit', 8: 'hit', 9: 'double', 10: 'double', 11: 'double', 12: 'hit', 13: 'stand', 14: 'stand', 15: 'stand', 16: 'stand', 17: 'stand', 18: 'stand', 19: 'stand', 20: 'stand', 21: 'stand'},
 		4: {5: 'hit', 6: 'hit', 7: 'hit', 8: 'hit', 9: 'double', 10: 'double', 11: 'double', 12: 'stand', 13: 'stand', 14: 'stand', 15: 'stand', 16: 'stand', 17: 'stand', 18: 'stand', 19: 'stand', 20: 'stand', 21: 'stand'},
-		5: {5: 'hit', 6: 'hit', 7: 'hit', 8: 'hit', 9: 'double', 10: 'double', 11: 'double', 12: 'hit', 13: 'stand', 14: 'stand', 15: 'stand', 16: 'stand', 17: 'stand', 18: 'stand', 19: 'stand', 20: 'stand', 21: 'stand'},
-		6: {5: 'hit', 6: 'hit', 7: 'hit', 8: 'hit', 9: 'double', 10: 'double', 11: 'double', 12: 'hit', 13: 'stand', 14: 'stand', 15: 'stand', 16: 'stand', 17: 'stand', 18: 'stand', 19: 'stand', 20: 'stand', 21: 'stand'},
+		5: {5: 'hit', 6: 'hit', 7: 'hit', 8: 'hit', 9: 'double', 10: 'double', 11: 'double', 12: 'stand', 13: 'stand', 14: 'stand', 15: 'stand', 16: 'stand', 17: 'stand', 18: 'stand', 19: 'stand', 20: 'stand', 21: 'stand'},
+		6: {5: 'hit', 6: 'hit', 7: 'hit', 8: 'hit', 9: 'double', 10: 'double', 11: 'double', 12: 'stand', 13: 'stand', 14: 'stand', 15: 'stand', 16: 'stand', 17: 'stand', 18: 'stand', 19: 'stand', 20: 'stand', 21: 'stand'},
 		7: {5: 'hit', 6: 'hit', 7: 'hit', 8: 'hit', 9: 'hit', 10: 'double', 11: 'double', 12: 'hit', 13: 'hit', 14: 'hit', 15: 'hit', 16: 'hit', 17: 'stand', 18: 'stand', 19: 'stand', 20: 'stand', 21: 'stand'},
 		8: {5: 'hit', 6: 'hit', 7: 'hit', 8: 'hit', 9: 'hit', 10: 'double', 11: 'double', 12: 'hit', 13: 'hit', 14: 'hit', 15: 'hit', 16: 'hit', 17: 'stand', 18: 'stand', 19: 'stand', 20: 'stand', 21: 'stand'},
 		9: {5: 'hit', 6: 'hit', 7: 'hit', 8: 'hit', 9: 'hit', 10: 'double', 11: 'double', 12: 'hit', 13: 'hit', 14: 'hit', 15: 'hit', 16: 'hit', 17: 'stand', 18: 'stand', 19: 'stand', 20: 'stand', 21: 'stand'},

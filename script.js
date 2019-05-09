@@ -74,7 +74,7 @@ function onClick(evt) {
     actionCount++;
     switch(evt.target.name) {
         case "hit": 
-            playerHand.hit(false);
+            playerHand.hit();
         break;
         case "stand": 
             playerHand.stand();
@@ -118,12 +118,16 @@ function render(state) {
 
     if (state === "feedback"){
         $("#percentage").html(`
-            You've got ${correctCount} out of ${actionCount} correct!<br>
+            You've got ${correctCount} out of ${actionCount} decisions correct!<br>
             <span>${Math.floor(correctCount/actionCount * 100)}%</span>
         `);
         if (correct) {
             $("#feedback").html("RIGHT!");
         } else {
+            if (playerHand.pair) {
+                $("#feedback").html(`WRONG! The correct play was to ${correctPlay}. When you have a pair of ${playerHand.cards[0][2].toUpperCase()}'s with the dealer showing a ${dealerHand.cards[0][2].toUpperCase()}, you're gonna wanna ${correctPlay}`);
+                return;
+            }
             if (playerHand.soft) {softFeedback = "soft";} else {softFeedback = "hard";}
             $("#feedback").html(`WRONG! The correct play was to ${correctPlay}. When you have a ${softFeedback} ${playerHand.total} and the dealer has a ${dealerHand.cards[0][2].toUpperCase()} showing, you gotta ${correctPlay}!`);
         }
