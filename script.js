@@ -14,6 +14,7 @@ var correctCount = 0;
 var incorrectCount = 0;
 var correctPlay = "";
 var correct;
+var softFeedback;
 
 /*----- cached element references -----*/ 
 var dealer = document.getElementById('dealer');
@@ -30,6 +31,9 @@ function init() {
 }
 
 function deal() {   
+    if (shoe.length < 154){
+        init();
+    }
     dealerHand = new Hand();
     playerHand = new Hand();
     dealerHand.cards.push(shoe.pop());
@@ -37,26 +41,15 @@ function deal() {
     playerHand.cards.push(shoe.pop());
     dealerHand.total = dealerHand.cards[0][0];
     playerHand.calcTotal();
-    render("start");
-}
-
-function onSplit() {
-    playerAction = "split";
-    if (playerHand.cards[0][0] === playerHand.cards[1][0]){
-        playerHand2 = new Hand();
-        playerHand2.cards.push(playerHand.cards.pop());
-        playerHand.cards.push(shoe.pop());
-        playerHand2.cards.push(shoe.pop());
-        render("split");
+    if (playerHand.total === 21) {
+        deal(); 
+     } else {
+        render("start");
     }
 }
 
 function nextHand() {
-    if (!correct){
 
-    }
-    $('#dealer').html('');
-    $('#player').html('');
     deal();
 }
 
@@ -78,23 +71,20 @@ function onClick(evt) {
     actionCount++;
     switch(evt.target.name) {
         case "hit": 
-            playerHand.hit(false);
-        break;
-        case "hit2": 
-            playerHand2.hit(true);
+            playerHand.hit();
         break;
         case "stand": 
             playerHand.stand();
-        break;
-        case "stand2": 
-            playerHand2.stand(true);
-        break;        
+        break;      
         case "double":
-            playerHand.double(); 
+            if (playerHand.cards.length === 2){
+                playerHand.double(); 
+            }
         break;
         case "split": 
-            onSplit();
-            playerHand.feedback("split");
+            if(playerHand.cards[0][0] === playerHand.cards[1][0] && playerHand.cards.length === 2) {
+                playerHand.split();
+            }
         break;                
     }
 }
@@ -105,51 +95,39 @@ function render(state) {
         <img class="card" src="img/${playerHand.cards[0][2]}${playerHand.cards[0][1]}.png">
         <img class="card" src="img/${playerHand.cards[1][2]}${playerHand.cards[1][1]}.png">
         <div id="controls">
-            <button name='hit'>Hit</button>
-            <button name='stand'>Stand</button>
-            <button name='double'>Double</button>
-            <button name='split'>Split</button>
+            <button class="button is-large is-success is-focused has-text-weight-bold" name='hit'>Hit</button>
+            <button class="button is-large is-success is-focused has-text-weight-bold" name='stand'>Stand</button>
+            <button class="button is-large is-success is-focused has-text-weight-bold" name='double'>Double</button>
+            <button class="button is-large is-success is-focused has-text-weight-bold" name='split'>Split</button>
         </div>
     </div>`;
 
     if(state==="start"){
+        $('#dealer').html('');
+        $('#player').html('');
         $(dealer).append(`<div class="hand"><img class="card" src="img/${dealerHand.cards[0][2]}${dealerHand.cards[0][1]}.png"></div>`);
         $(player).append(playerTemplate);
-    }
-
-    if (state==="split"){
-        var splitTemplate = `
-        <div class="hand">
-            <img class="card" src="img/${playerHand2.cards[0][2]}${playerHand2.cards[0][1]}.png">
-            <img class="card" src="img/${playerHand2.cards[1][2]}${playerHand2.cards[1][1]}.png">
-            <div id="controls">
-                <button name='hit2'>Hit</button>
-                <button name='stand2'>Stand</button>
-                <button name='double2'>Double</button>
-            </div>
-        </div>`;        
-        $(player).html("");
-        $(player).append(playerTemplate);
-        $(player).append(splitTemplate);
     }
 
     if (state==="hit") {
         $("#player > div.hand:first-child").prepend(`<img class="card" src="img/${playerHand.cards[playerHand.cards.length-1][2]}${playerHand.cards[playerHand.cards.length-1][1]}.png">`);
     }
 
-    if (state==="splithit") {
-        $("#player > div.hand:nth-child(2)").prepend(`<img class="card" src="img/${playerHand2.cards[playerHand2.cards.length-1][2]}${playerHand2.cards[playerHand2.cards.length-1][1]}.png">`);
-    }
-
     if (state === "feedback"){
         $("#percentage").html(`
-            You've got ${correctCount} out of ${actionCount} correct!<br>
-            <span>% ${Math.floor(correctCount/actionCount * 100)}</span>
+            You've got ${correctCount} out of ${actionCount} decisions correct!<br>
+            <span>${Math.floor(correctCount/actionCount * 100)}%</span>
         `);
         if (correct) {
             $("#feedback").html("RIGHT!");
         } else {
-            $("#feedback").html(`WRONG! The correct play was to ${correctPlay}`);
+            if (playerHand.pair && playerHand.length == 2) {
+                $("#feedback").html(`WRONG! The correct play was to ${correctPlay}. When you have a pair of ${playerHand.cards[0][2].toUpperCase()}'s with the dealer showing a ${dealerHand.cards[0][2].toUpperCase()}, you're gonna wanna ${correctPlay}`);
+                return;
+            }
+            if (playerHand.soft) {softFeedback = "soft";} else {softFeedback = "hard";}
+            if (correctPlay == "double" && playerHand.cards.length > 2) {correctPlay = "hit";}
+            $("#feedback").html(`WRONG! The correct play was to ${correctPlay}. When you have a ${softFeedback} ${playerHand.total} and the dealer has a ${dealerHand.cards[0][2].toUpperCase()} showing, you gotta ${correctPlay}!`);
         }
     }
 }
