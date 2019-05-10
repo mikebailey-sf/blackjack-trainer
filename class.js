@@ -5,22 +5,26 @@ class Hand {
 		this.over = false;
 		this.soft = false;
 		this.pair = false;
+		this.softHit = false;
 	}
 
 	calcTotal() {
 		let t = 0;
 		let _soft = this.soft;
+		let _softHit = this.softHit;
 		if (this.cards[0][0] === this.cards[1][0]){
 			this.pair = true;	 
 		}
 		this.cards.forEach(function(card){
-			if (card[0] == 11) {
+			if (card[0] == 11 && !_softHit) {
 				_soft = true;
+				_softHit = true;
 			}
 			t+=card[0];
 		});
 		this.total = t;
 		this.soft = _soft;
+		this.softHit = _softHit;
 	}
 
 	hit() {
@@ -28,7 +32,6 @@ class Hand {
 		this.cards.push(shoe.pop());
 		this.calcTotal();
 		render("hit");
-		debugger;
 		if (this.total>=21 && this.soft == false){
 			nextHand();
 		}
