@@ -121,11 +121,12 @@ function render(state) {
         if (correct) {
             $("#feedback").html("RIGHT!");
         } else {
-            if (playerHand.pair) {
+            if (playerHand.pair && playerHand.length == 2) {
                 $("#feedback").html(`WRONG! The correct play was to ${correctPlay}. When you have a pair of ${playerHand.cards[0][2].toUpperCase()}'s with the dealer showing a ${dealerHand.cards[0][2].toUpperCase()}, you're gonna wanna ${correctPlay}`);
                 return;
             }
             if (playerHand.soft) {softFeedback = "soft";} else {softFeedback = "hard";}
+            if (correctPlay == "double" && playerHand.cards.length > 2) {correctPlay = "hit";}
             $("#feedback").html(`WRONG! The correct play was to ${correctPlay}. When you have a ${softFeedback} ${playerHand.total} and the dealer has a ${dealerHand.cards[0][2].toUpperCase()} showing, you gotta ${correctPlay}!`);
         }
     }
