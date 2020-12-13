@@ -3,9 +3,10 @@
 }
 
 #controls button {
-    margin: 10px;
-    width: 20vmin;
+    margin: 5px;
+    width: 30vmin;
     background-color: indigo;
+
 }
 
 .hero {
@@ -14,6 +15,7 @@
     text-align: center;
     font-weight: bold;
     font-size:25px;
+    margin-bottom:0 !important;
 }
 
 .title {
@@ -21,8 +23,6 @@
 }
 
 #controls button:hover {
-    margin: 10px;
-    width: 20vmin;
     background-color: rgb(149,85,192);
 }
 
@@ -38,7 +38,10 @@ main {
     border-radius: 10px;
     margin: 5px;
     padding: 5px;
-    width: 120px;
+    width: 100px;
+}
+.hand {
+    overflow: scroll;
 }
 
 #play-area {
@@ -53,6 +56,8 @@ main {
     font-size: 18px;
     color: black;
     height: 15vmin;
+    width: 90%;
+    margin: 0 auto;
 }
 
 span{
@@ -62,10 +67,14 @@ span{
     font-size: 20px;
     font-weight:bold;
     color: black;
-    margin-bottom: 10px;
     text-decoration: underline;
 }
 
 .field.is-grouped{
     display: inline-flex;
+    margin-bottom:0;
+}
+
+.column {
+    padding: .5rem;
 }
