@@ -71,6 +71,7 @@ function onClick(evt) {
     switch(evt.target.name) {
         case "hit": 
             playerHand.hit();
+            document.getElementById('doubleButton').disabled="true";
         break;
         case "stand": 
             playerHand.stand();
@@ -98,7 +99,7 @@ function render(state) {
                 <button class="button is-large is-success is-focused has-text-weight-bold" name='stand'>Stand</button>
             </div>
             <div class="field is-grouped">
-                <button class="button is-large is-success is-focused has-text-weight-bold" name='double'>Double</button>
+                <button class="button is-large is-success is-focused has-text-weight-bold" id='doubleButton' name='double'>Double</button>
                 <button class="button is-large is-success is-focused has-text-weight-bold" id='splitButton' name='split'>Split</button>
             </div>
         </div>
