@@ -49,7 +49,6 @@ function deal() {
 }
 
 function nextHand() {
-
     deal();
 }
 
@@ -88,7 +87,6 @@ function onClick(evt) {
         break;                
     }
 }
-https://github.com/mikebailey-sf
 function render(state) {
     var playerTemplate = `
     <div class="hand">
@@ -101,7 +99,7 @@ function render(state) {
             </div>
             <div class="field is-grouped">
                 <button class="button is-large is-success is-focused has-text-weight-bold" name='double'>Double</button>
-                <button class="button is-large is-success is-focused has-text-weight-bold" name='split'>Split</button>
+                <button class="button is-large is-success is-focused has-text-weight-bold" id='splitButton' name='split'>Split</button>
             </div>
         </div>
     </div>`;
@@ -111,6 +109,9 @@ function render(state) {
         $('#player').html('');
         $(dealer).append(`<div class="hand"><img class="card" src="img/${dealerHand.cards[0][2]}${dealerHand.cards[0][1]}.png"></div>`);
         $(player).append(playerTemplate);
+        if (!playerHand.pair) {
+            document.getElementById('splitButton').disabled="true";
+        }
     }
 
     if (state==="hit") {

@@ -10,17 +10,14 @@
 
 .hero {
     background-color: white;
-    color: #333333;
-    display:none;
+    color: indigo;
+    text-align: center;
+    font-weight: bold;
+    font-size:25px;
 }
 
 .title {
     font-family: Georgia, 'Times New Roman', Times, serif;
-    font-size: 40px;
-}
-
-.title, .subtitle {
-    color: #333333;
 }
 
 #controls button:hover {
@@ -41,7 +38,7 @@ main {
     border-radius: 10px;
     margin: 5px;
     padding: 5px;
-    width: 150px;
+    width: 120px;
 }
 
 #play-area {
@@ -53,21 +50,20 @@ main {
 }
 
 #percentage, #feedback {
-    font-size: 22px;
-    color: indigo;
-    height: 25vmin;
+    font-size: 18px;
+    color: black;
+    height: 15vmin;
 }
 
 span{
-    font-size: 30px;
 }
 
 .righthead {
     font-size: 20px;
     font-weight:bold;
-    color: indigo;
-    border-bottom: 2px solid indigo;
+    color: black;
     margin-bottom: 10px;
+    text-decoration: underline;
 }
 
 .field.is-grouped{
