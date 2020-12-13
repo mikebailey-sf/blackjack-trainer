@@ -40,9 +40,6 @@ main {
     padding: 5px;
     width: 100px;
 }
-.hand {
-    overflow: scroll;
-}
 
 #play-area {
     text-align: center;
