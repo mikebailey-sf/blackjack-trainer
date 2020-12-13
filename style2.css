@@ -9,8 +9,9 @@
 }
 
 .hero {
-    background-color: indigo;
-    color: white;
+    background-color: white;
+    color: #333333;
+    display:none;
 }
 
 .title {
@@ -19,7 +20,7 @@
 }
 
 .title, .subtitle {
-    color: white;
+    color: #333333;
 }
 
 #controls button:hover {
@@ -33,13 +34,14 @@
 }
 
 main {
-    background-color: blanchedalmond;
+
 }
 
 .card {
     border-radius: 10px;
     margin: 5px;
     padding: 5px;
+    width: 150px;
 }
 
 #play-area {
@@ -48,22 +50,26 @@ main {
 
 #right {
     text-align: center;
-    background-color: #255e69;
 }
 
 #percentage, #feedback {
     font-size: 22px;
-    color: white;
-    height: 30vmin;
+    color: indigo;
+    height: 25vmin;
 }
 
 span{
-    font-size: 90px;
+    font-size: 30px;
 }
 
 .righthead {
-    font-size: 40px;
-    color: white;
+    font-size: 20px;
+    font-weight:bold;
+    color: indigo;
     border-bottom: 2px solid indigo;
     margin-bottom: 10px;
+}
+
+.field.is-grouped{
+    display: inline-flex;
 }

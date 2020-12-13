@@ -41,7 +41,7 @@ function deal() {
     playerHand.cards.push(shoe.pop());
     dealerHand.total = dealerHand.cards[0][0];
     playerHand.calcTotal();
-    if (playerHand.total === 21) {
+    if (playerHand.total === 21) {init(); 
         deal(); 
      } else {
         render("start");
@@ -88,17 +88,21 @@ function onClick(evt) {
         break;                
     }
 }
-
+https://github.com/mikebailey-sf
 function render(state) {
     var playerTemplate = `
     <div class="hand">
         <img class="card" src="img/${playerHand.cards[0][2]}${playerHand.cards[0][1]}.png">
         <img class="card" src="img/${playerHand.cards[1][2]}${playerHand.cards[1][1]}.png">
         <div id="controls">
-            <button class="button is-large is-success is-focused has-text-weight-bold" name='hit'>Hit</button>
-            <button class="button is-large is-success is-focused has-text-weight-bold" name='stand'>Stand</button>
-            <button class="button is-large is-success is-focused has-text-weight-bold" name='double'>Double</button>
-            <button class="button is-large is-success is-focused has-text-weight-bold" name='split'>Split</button>
+            <div class="field is-grouped">
+                <button class="button is-large is-success is-focused has-text-weight-bold" name='hit'>Hit</button>
+                <button class="button is-large is-success is-focused has-text-weight-bold" name='stand'>Stand</button>
+            </div>
+            <div class="field is-grouped">
+                <button class="button is-large is-success is-focused has-text-weight-bold" name='double'>Double</button>
+                <button class="button is-large is-success is-focused has-text-weight-bold" name='split'>Split</button>
+            </div>
         </div>
     </div>`;
 
