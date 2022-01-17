@@ -1,8 +1,7 @@
 # blackjack-trainer
 
-## Blackjack Trainer Pseudocode:
-This is a program to train the user to play Blackjack optimally. Hopefully that won't be too hard...
-If I can't figure out the training aspect I should at least end up with a playable Blackjack game.
+## Blackjack Trainer:
+This is a trainer to play blackjack
 
 
 ## Objects/Variables/Struture
